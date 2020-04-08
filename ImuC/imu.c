@@ -90,8 +90,8 @@ void streamData(int32_t sockfd)
 		   //Data is ready to be read
 		   
 		   bzero(buf, BUFSIZE);
-		   int count = recv(sockfd, buf, sizeof(buf), 0);
-
+		   recv(sockfd, buf, sizeof(buf), 0);
+		   
 		   if(!strncmp(buf, "START", 5))
 		   {
 				printf("Stream started\n");   
@@ -113,7 +113,7 @@ void streamData(int32_t sockfd)
 			if(seqID < 2147483647)
 				seqID++;
 			else
-				seqID = 0; d
+				seqID = 0; 
 	   
 			bzero(buf, BUFSIZE); //Zero out buffer
 
@@ -159,7 +159,7 @@ void streamData(int32_t sockfd)
 																			bnodQ.quater_w, 
 																			bnodQ.quater_x, 
 																			bnodQ.quater_y,
-																			bnodw.quater_z); 
+																			bnodQ.quater_z); 
 
 				int n = write(sockfd, buf, strlen(buf));
 

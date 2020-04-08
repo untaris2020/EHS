@@ -3,13 +3,13 @@ CFLAGS= -O3 -Wall -g
 LIBS=
 AR=ar
 
-ALLBIN=getbno055
+ALLBIN=imu
 
 all: ${ALLBIN}
 
 clean:
 	rm -f *.o ${ALLBIN}
 
-getbno055: i2c_bno055.o getbno055.o
-	$(CC) i2c_bno055.o getbno055.o -o getbno055 ${LIBS}
+imu: i2c_bno055.o imu.o
+	$(CC) i2c_bno055.o imu.o -o imu ${LIBS}
 
