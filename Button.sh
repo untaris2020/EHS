@@ -33,11 +33,10 @@ then
 
         killall -sKILL chestCam
         killall -sKILL chestButton
-        killall -sKILL getbno055
 
         killall -sKILL gloveCam
         killall -sKILL gloveButton
         killall -sKILL gloveFlex
-        killall -sKILL getbno055
+        killall -sKILL imu
         echo "MANUALLY KILLED"
 fi
