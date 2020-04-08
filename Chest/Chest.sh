@@ -9,10 +9,10 @@
 
 #!/bin/bash
 
-/home/pi/Chest/chestCam &
+/home/pi/EHS/Chest/chestCam &
 sleep 26
-/home/pi/Chest/chestButton &
-/home/pi/IMUC/getbno055 &
+/home/pi/EHS/Chest/chestButton &
+/home/pi/EHS/ImuC/imu &
 
 status=false
 
@@ -31,10 +31,10 @@ do
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
         then
                 echo "REACTIVATING IT"
-                /home/pi/Chest/chestCam &
+                /home/pi/EHS/Chest/chestCam &
                 sleep 26
-                /home/pi/Chest/chestButton &
-                /home/pi/IMUC/getbno055 &
+                /home/pi/EHS/Chest/chestButton &
+                /home/pi/EHS/ImuC/imu &
                 
                 status=false
 
