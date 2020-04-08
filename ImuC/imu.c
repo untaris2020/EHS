@@ -133,7 +133,7 @@ void streamData(int32_t sockfd)
                  opmode_t newmode = compass; //compass = 0x09
                  res = set_mode(newmode);
                       if(res != 0) {
-                         printf("Error: could not set sensor mode %s [0x%02X].\n", opr_mode, newmode);
+                         printf("Error: could not set sensor mode\n");
                          exit(-1);
                       }
 
