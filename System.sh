@@ -55,8 +55,9 @@ then
         echo ""
         echo "--------------------------------------------"
         echo "Shell Scripts Active and Executables created"
-        echo "READY TO RUN"
-
+        echo "               READY TO RUN                 "
+        echp "--------------------------------------------"
+        echo ""
 
 
 
