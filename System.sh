@@ -51,6 +51,9 @@ then
         
         cd /home/pi/EHS/Chest && make
         cd /home/pi/EHS/Glove && make
+        
+        echo ""
+        echo "--------------------------------------------"
         echo "Shell Scripts Active and Executables created"
         echo "READY TO RUN"
 
