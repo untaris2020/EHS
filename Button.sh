@@ -39,4 +39,19 @@ then
         killall -sKILL gloveFlex
         killall -sKILL imu
         echo "MANUALLY KILLED"
+        
+elif [ "$1" == "init" ]
+then
+
+        chmod +x /home/pi/EHS/Chest/Chest.sh
+        chmod +x /home/pi/EHS/Glove/Glove.sh
+        
+        cd /home/pi/EHS/Chest && make
+        cd /home/pi/EHS/Glove && make
+        echo "Shell Scripts Active and Executables created"
+        echo "READY TO RUN"
+
+
+
+
 fi
