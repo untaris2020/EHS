@@ -1,47 +1,43 @@
-#include "base64.h"
-#include <iostream>
-#include <vector>
+// Project Name:  A.R.I.S. - Augmented Reality Interface System
+// University:    University of North Texas
+// Developers:    Juan Ruiz and Timothy Stern, Computer Engineering
+// Date Created:  04/07/2020
+
+// Purpose:       The purpose of the gloveButton.c script is to read the status of the reset button and send the status to the
+//				  EHS via TCP.
+
+//                Run this command to compile
+//                gcc gloveButton.c -o gloveButton -lwiringPi
+
+
+
+#include <wiringPi.h>
+#include <stdbool.h> 
 #include <stdio.h>
-#include <time.h>
-#include <unistd.h>
-#include <string.h>
-
-// OpenCV Libraries
-#include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-
-// Socket Libraries
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h> 
+#include <time.h>
 
-int connect_to_server(int32_t * sockfd); 
-void streamData(int32_t sockfd); 
-
-using namespace std;
-using namespace cv;
-
-#define BUFSIZE 20000
+#define gpioPORT 7
+#define BUFSIZE 1024
 #define ID 0 
 #define portno 6002
-#define hostname "10.0.1.7"
-
-// Sets the frame width and height
-#define width 320
-#define height 240
-
-// Initializing the OpenCV camera
-Mat frame;
-VideoCapture cap;
+#define hostname "127.0.0.1"
+ 
+int connect_to_server(int32_t * sockfd);
+void streamData(int32_t sockfd); 
 
 int main() 
 {
     int32_t sockfd;
     char buffer[BUFSIZE];
-
+       
 	while(1)
 	{
 		//run the connection until one is established
@@ -53,8 +49,7 @@ int main()
 		
 		/*Sending first time registration message*/ 
 		snprintf(buffer, sizeof(buffer), "<BEG>%d$%s<EOF>", ID, "REG"); 
-		//int n = write(sockfd, buffer, strlen(buffer));
-        int n = send(sockfd, buffer, strlen(buffer), 0);
+		int n = write(sockfd, buffer, strlen(buffer));
 
 		if(n < 0)
 		{
@@ -69,17 +64,16 @@ int main()
 }
 
 void streamData(int32_t sockfd)
-{
-	// Frame compression to JPEG
-	vector<uchar> buff;
-	vector<int> param(2);
-	param[0] = IMWRITE_JPEG_QUALITY;
-	param[1] = 40;
+{	
+	//Declaration of variables for Button
+    wiringPiSetup();
+    pinMode(gpioPORT, INPUT);
+	bool status = false;
 
-	// Sets the frame width and height
-	cap.open(0);
-	cap.set(3, width);
-	cap.set(4, height);
+	struct GloveIMUData
+    {
+	  char * status; 
+    } data;
 
 	uint32_t seqID = 0; 
 	uint32_t STREAM = 0;
@@ -91,7 +85,9 @@ void streamData(int32_t sockfd)
 	{
 	   FD_SET(sockfd,&rfds); 
 	   tv.tv_sec = 0; 
-	   tv.tv_usec = 16666;
+	   tv.tv_usec = 1;
+	
+	   printf("Running loop -- select\n");
 	    
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
 	   {
@@ -100,25 +96,31 @@ void streamData(int32_t sockfd)
 
 	   if (FD_ISSET(sockfd, &rfds))
 	   {
+		   printf("Data Ready...\n");
 		   //Data is ready to be read
+		   
 		   bzero(buf, BUFSIZE);
 		   int count = recv(sockfd, buf, sizeof(buf), 0);
 
 		   if(!strncmp(buf, "START", 5))
 		   {
+				printf("Stream started\n");   
 				STREAM = 1; 
 		   }
 		   else if(!strncmp(buf, "STOP", 5))
 		   {
+				printf("Stream stopped\n"); 
 				STREAM = 0;
 		   }
 		   else if(!strcmp(buf, ""))
 		   {
+			   printf("Detected Disconnect\n");
 			   return; 
 		   }
 	   }
 	   else if(STREAM)
 	   {
+		   printf("Trying to send data\n");
 			//Send data   
 			if(seqID < 2147483647)
 				seqID++;
@@ -126,20 +128,21 @@ void streamData(int32_t sockfd)
 				seqID = 0; 
 	   
 			bzero(buf, BUFSIZE); //Zero out buffer
-			
-            cap.read(frame);                                  // Wait for a new frame from camera and store it into 'frame'
 
-            imencode(".jpg", frame, buff, param);             // Compresses each frame to JPG
 
-            string temp;
-            for(int i = 0; i < buff.size(); i++)
+			// If the gpioPORT is 1 (if the button is toggled) then it will send an INACTIVE message to the server letting
+			// it know that it has some issues and that is resetting the pinMode
+			// if the gpioPORT is 0 it means that everything is running smoothly
+            if(digitalRead(gpioPORT) == 1 && status == false)
             {
-                temp += buff[i];
+                data.status = "INACTIVE";
+				status = true;
             }
-
-            string encoded = base64_encode(reinterpret_cast<const unsigned char*>(temp.c_str()), temp.length());      // Encodes the frame into base64
-
-            //int size = encoded.length();                      // Determines the length of each base64 frame
+            else if(digitalRead(gpioPORT) == 0 && status == true)
+            {
+                data.status = "ACTIVE";
+				status = false;
+            }
 
 			/*READ ME: Packet format 
 			* When sending data each packet will be truncated with an <EOF> string and started with a <BEG> string
@@ -147,17 +150,16 @@ void streamData(int32_t sockfd)
 			* When possible include a char delimiter so data can be pulled off in the highest priority 
 			* An example is shown below */
 
-			snprintf(buf, sizeof(buf), "<BEG>%d$%s<EOF>", ID, encoded.c_str()); 
+			snprintf(buf, sizeof(buf), "<BEG>%d$%s<EOF>", ID, data.status); 
 
-			//int n = write(sockfd, buf, strlen(buf));
-            int n = send(sockfd, buf, strlen(buf), 0);
+			int n = write(sockfd, buf, strlen(buf));
 
 			if(n < 0)
 			{
 				perror("ERROR writing to socket");
 			}		
 	   }
-	   sleep(1);
+	   //sleep(1);
 	}
 }
 
