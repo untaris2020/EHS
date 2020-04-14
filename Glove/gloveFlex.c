@@ -109,12 +109,12 @@ void streamData(int32_t sockfd)
 	
 	while(1)
 	{
-	   FD_SET(sockfd,&rfds); 
-	   tv.tv_sec = 0; 
+	   FD_SET(sockfd,&rfds);
+	   tv.tv_sec = 0;
 	   tv.tv_usec = 1;
-	
+
 	   printf("Running loop -- select\n");
-	    
+
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
 	   {
 		  perror("Select Error");
@@ -124,35 +124,35 @@ void streamData(int32_t sockfd)
 	   {
 		   printf("Data Ready...\n");
 		   //Data is ready to be read
-		   
+
 		   bzero(buf, BUFSIZE);
 		   int count = recv(sockfd, buf, sizeof(buf), 0);
 
 		   if(!strncmp(buf, "START", 5))
 		   {
-				printf("Stream started\n");   
-				STREAM = 1; 
+				printf("Stream started\n");
+				STREAM = 1;
 		   }
 		   else if(!strncmp(buf, "STOP", 5))
 		   {
-				printf("Stream stopped\n"); 
+				printf("Stream stopped\n");
 				STREAM = 0;
 		   }
 		   else if(!strcmp(buf, ""))
 		   {
 			   printf("Detected Disconnect\n");
-			   return; 
+			   return;
 		   }
 	   }
 	   else if(STREAM)
 	   {
 			printf("Trying to send data\n");
-			//Send data   
+			//Send data
 			if(seqID < 2147483647)
 				seqID++;
 			else
-				seqID = 0; 
-	   
+				seqID = 0;
+
 			bzero(buf, BUFSIZE); //Zero out buffer
 
 			//Insert data here
@@ -165,56 +165,56 @@ void streamData(int32_t sockfd)
             if(thumbFinger > 50)
             {
                 data.thumbFinger = 1;
-				thumbStatus = true;
+		thumbStatus = true;
             }
             else
             {
                 data.thumbFinger = 0;
-				thumbStatus = false;
+		thumbStatus = false;
             }
 
             if(indexFinger > 50)
             {
                 data.indexFinger = 1;
-				indexStatus = true;
+		indexStatus = true;
             }
             else
             {
                 data.indexFinger = 0;
-				indexStatus = false;
+		indexStatus = false;
             }
 
             if(middleFinger > 50)
             {
                 data.middleFinger = 1;
-				middleStatus = true;
+		middleStatus = true;
             }
             else
             {
                 data.middleFinger = 0;
-				middleStatus = false;
+		middleStatus = false;
             }
 
             if(ringFinger > 50)
             {
                 data.ringFinger = 1;
-				ringStatus = true;
+		ringStatus = true;
             }
             else
             {
                 data.ringFinger = 0;
-				ringStatus = false;
+		ringStatus = false;
             }
 
             if(littleFinger > 50)
             {
                 data.littleFinger = 1;
-				littleStatus = true;
+		littleStatus = true;
             }
             else
             {
                 data.littleFinger = 0;
-				littleStatus = false;
+		littleStatus = false;
             }
 
 			/*READ ME: Packet format 
