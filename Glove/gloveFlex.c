@@ -92,7 +92,7 @@ void streamData(int32_t sockfd)
 
 	// Declaration of boolean variables for debouncing
     mcp3004Setup(BASE, CHAN0); // 3004 and 3008 are the same 4/8 channels
- 	bool thumbStatus = false;
+ 	  bool thumbStatus = false;
     bool indexStatus = false;
     bool middleStatus = false;
     bool ringStatus = false;
@@ -164,57 +164,57 @@ void streamData(int32_t sockfd)
 
             if(thumbFinger > 50)
             {
-                data.thumbFinger = 1;
-		thumbStatus = true;
+              data.thumbFinger = 1;
+              thumbStatus = true;
             }
             else
             {
-                data.thumbFinger = 0;
-		thumbStatus = false;
+              data.thumbFinger = 0;
+              thumbStatus = false;
             }
 
             if(indexFinger > 50)
             {
-                data.indexFinger = 1;
-		indexStatus = true;
+              data.indexFinger = 1;
+              indexStatus = true;
             }
             else
             {
-                data.indexFinger = 0;
-		indexStatus = false;
+              data.indexFinger = 0;
+              indexStatus = false;
             }
 
             if(middleFinger > 50)
             {
-                data.middleFinger = 1;
-		middleStatus = true;
+              data.middleFinger = 1;
+              middleStatus = true;
             }
             else
             {
-                data.middleFinger = 0;
-		middleStatus = false;
+              data.middleFinger = 0;
+              middleStatus = false;
             }
 
             if(ringFinger > 50)
             {
-                data.ringFinger = 1;
-		ringStatus = true;
+              data.ringFinger = 1;
+              ringStatus = true;
             }
             else
             {
-                data.ringFinger = 0;
-		ringStatus = false;
+              data.ringFinger = 0;
+              ringStatus = false;
             }
 
             if(littleFinger > 50)
             {
-                data.littleFinger = 1;
-		littleStatus = true;
+              data.littleFinger = 1;
+              littleStatus = true;
             }
             else
             {
-                data.littleFinger = 0;
-		littleStatus = false;
+              data.littleFinger = 0;
+              littleStatus = false;
             }
 
 			/*READ ME: Packet format 
@@ -224,11 +224,11 @@ void streamData(int32_t sockfd)
 			* An example is shown below */
 
 			snprintf(buf, sizeof(buf), "<BEG>%d$%d$%d$%d$%d$%d<EOF>", ID, 
-                                                                    data.thumbFinger, 
-                                                                    data.indexFinger, 
-                                                                    data.middleFinger,
-                                                                    data.ringFinger, 
-                                                                    data.littleFinger);
+                                                                data.thumbFinger, 
+                                                                data.indexFinger, 
+                                                                data.middleFinger,
+                                                                data.ringFinger, 
+                                                                data.littleFinger);
 
 			int n;
 			if((thumbStatus == true && (indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true)) && debouncer == false)
@@ -253,6 +253,7 @@ void streamData(int32_t sockfd)
         }
 	   //sleep(1);
 	}
+  
 }
 
 int connect_to_server(int32_t * sockfd)
