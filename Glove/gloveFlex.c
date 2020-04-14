@@ -164,6 +164,7 @@ void streamData(int32_t sockfd)
 
             if(thumbFinger > 50)
             {
+<<<<<<< HEAD
               data.thumbFinger = 1;
               thumbStatus = true;
             }
@@ -171,10 +172,20 @@ void streamData(int32_t sockfd)
             {
               data.thumbFinger = 0;
               thumbStatus = false;
+=======
+                data.thumbFinger = 1;
+				thumbStatus = true;
+            }
+            else
+            {
+                data.thumbFinger = 0;
+				thumbStatus = false;
+>>>>>>> 292a872ae52efdf974370ae981ee549eded37974
             }
 
             if(indexFinger > 50)
             {
+<<<<<<< HEAD
               data.indexFinger = 1;
               indexStatus = true;
             }
@@ -182,10 +193,20 @@ void streamData(int32_t sockfd)
             {
               data.indexFinger = 0;
               indexStatus = false;
+=======
+                data.indexFinger = 1;
+				indexStatus = true;
+            }
+            else
+            {
+                data.indexFinger = 0;
+				indexStatus = false;
+>>>>>>> 292a872ae52efdf974370ae981ee549eded37974
             }
 
             if(middleFinger > 50)
             {
+<<<<<<< HEAD
               data.middleFinger = 1;
               middleStatus = true;
             }
@@ -193,10 +214,20 @@ void streamData(int32_t sockfd)
             {
               data.middleFinger = 0;
               middleStatus = false;
+=======
+                data.middleFinger = 1;
+				middleStatus = true;
+            }
+            else
+            {
+                data.middleFinger = 0;
+				middleStatus = false;
+>>>>>>> 292a872ae52efdf974370ae981ee549eded37974
             }
 
             if(ringFinger > 50)
             {
+<<<<<<< HEAD
               data.ringFinger = 1;
               ringStatus = true;
             }
@@ -204,10 +235,20 @@ void streamData(int32_t sockfd)
             {
               data.ringFinger = 0;
               ringStatus = false;
+=======
+                data.ringFinger = 1;
+				ringStatus = true;
+            }
+            else
+            {
+                data.ringFinger = 0;
+				ringStatus = false;
+>>>>>>> 292a872ae52efdf974370ae981ee549eded37974
             }
 
             if(littleFinger > 50)
             {
+<<<<<<< HEAD
               data.littleFinger = 1;
               littleStatus = true;
             }
@@ -215,6 +256,15 @@ void streamData(int32_t sockfd)
             {
               data.littleFinger = 0;
               littleStatus = false;
+=======
+                data.littleFinger = 1;
+				littleStatus = true;
+            }
+            else
+            {
+                data.littleFinger = 0;
+				littleStatus = false;
+>>>>>>> 292a872ae52efdf974370ae981ee549eded37974
             }
 
 			/*READ ME: Packet format 
