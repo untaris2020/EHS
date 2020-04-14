@@ -13,7 +13,7 @@
 #include <wiringPi.h>
 #include <mcp3004.h>
 
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -23,10 +23,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
-#include <netdb.h> 
+#include <netdb.h>
 
 #define BUFSIZE 1024
-#define ID 0 
+#define ID 0
 #define portno 6002
 #define hostname "127.0.0.1"
 
@@ -41,13 +41,13 @@
 #define CHAN4 4
 
 int connect_to_server(int32_t * sockfd);
-void streamData(int32_t sockfd); 
+void streamData(int32_t sockfd);
 
-int main() 
+int main()
 {
-    int32_t sockfd;
-    char buffer[BUFSIZE];
-    
+  int32_t sockfd;
+  char buffer[BUFSIZE];
+
 	while(1)
 	{
 		//run the connection until one is established
@@ -56,17 +56,17 @@ int main()
 			//Give the server a little time
 			sleep(1);
 		}
-		
-		/*Sending first time registration message*/ 
-		snprintf(buffer, sizeof(buffer), "<BEG>%d$%s<EOF>", ID, "REG"); 
+
+		/*Sending first time registration message*/
+		snprintf(buffer, sizeof(buffer), "<BEG>%d$%s<EOF>", ID, "REG");
 		int n = write(sockfd, buffer, strlen(buffer));
 
 		if(n < 0)
 		{
 			perror("ERROR writing to socket");
 			return -1;
-		}		
-		
+		}
+
 		streamData(sockfd);
 	}
 
@@ -74,14 +74,14 @@ int main()
 }
 
 void streamData(int32_t sockfd)
-{	
+{
 	struct GloveIMUData
     {
-	  int32_t thumbFinger;
-	  int32_t indexFinger;
-	  int32_t middleFinger; 
-	  int32_t ringFinger; 
-	  int32_t littleFinger;  
+      int32_t thumbFinger;
+      int32_t indexFinger;
+      int32_t middleFinger;
+      int32_t ringFinger;
+      int32_t littleFinger;
     } data;
 
 	// Checks if it is able to detect any sensors
@@ -97,16 +97,16 @@ void streamData(int32_t sockfd)
     bool middleStatus = false;
     bool ringStatus = false;
     bool littleStatus = false;
-  
+
     bool debouncer = false;
 
-	// Select variable declaration
-	uint32_t seqID = 0; 
-	uint32_t STREAM = 0;
-	char buf[BUFSIZE];
-	fd_set rfds; 
+    // Select variable declaration
+    uint32_t seqID = 0;
+    uint32_t STREAM = 0;
+    char buf[BUFSIZE];
+    fd_set rfds;
     struct timeval tv;
-	
+
 	while(1)
 	{
 	   FD_SET(sockfd,&rfds);
@@ -144,11 +144,11 @@ void streamData(int32_t sockfd)
 			   return;
 		   }
 	   }
-	   else if(STREAM)
-	   {
-			printf("Trying to send data\n");
+	  else if(STREAM)
+	  {
+      printf("Trying to send data\n");
 			//Send data
-			if(seqID < 2147483647)
+      if(seqID < 2147483647)
 				seqID++;
 			else
 				seqID = 0;
@@ -164,120 +164,70 @@ void streamData(int32_t sockfd)
 
             if(thumbFinger > 50)
             {
-<<<<<<< HEAD
               data.thumbFinger = 1;
               thumbStatus = true;
             }
             else
             {
               data.thumbFinger = 0;
-              thumbStatus = false;
-=======
-                data.thumbFinger = 1;
-				thumbStatus = true;
-            }
-            else
-            {
-                data.thumbFinger = 0;
-				thumbStatus = false;
->>>>>>> 292a872ae52efdf974370ae981ee549eded37974
+				      thumbStatus = false;
             }
 
             if(indexFinger > 50)
             {
-<<<<<<< HEAD
               data.indexFinger = 1;
-              indexStatus = true;
+				      indexStatus = true;
             }
             else
             {
               data.indexFinger = 0;
-              indexStatus = false;
-=======
-                data.indexFinger = 1;
-				indexStatus = true;
-            }
-            else
-            {
-                data.indexFinger = 0;
-				indexStatus = false;
->>>>>>> 292a872ae52efdf974370ae981ee549eded37974
+				      indexStatus = false;
             }
 
             if(middleFinger > 50)
             {
-<<<<<<< HEAD
               data.middleFinger = 1;
-              middleStatus = true;
+				      middleStatus = true;
             }
             else
             {
               data.middleFinger = 0;
-              middleStatus = false;
-=======
-                data.middleFinger = 1;
-				middleStatus = true;
-            }
-            else
-            {
-                data.middleFinger = 0;
-				middleStatus = false;
->>>>>>> 292a872ae52efdf974370ae981ee549eded37974
+				      middleStatus = false;
             }
 
             if(ringFinger > 50)
             {
-<<<<<<< HEAD
               data.ringFinger = 1;
               ringStatus = true;
             }
             else
             {
               data.ringFinger = 0;
-              ringStatus = false;
-=======
-                data.ringFinger = 1;
-				ringStatus = true;
-            }
-            else
-            {
-                data.ringFinger = 0;
-				ringStatus = false;
->>>>>>> 292a872ae52efdf974370ae981ee549eded37974
+				      ringStatus = false;
             }
 
             if(littleFinger > 50)
             {
-<<<<<<< HEAD
               data.littleFinger = 1;
-              littleStatus = true;
+				      littleStatus = true;
             }
             else
             {
               data.littleFinger = 0;
-              littleStatus = false;
-=======
-                data.littleFinger = 1;
-				littleStatus = true;
-            }
-            else
-            {
-                data.littleFinger = 0;
-				littleStatus = false;
->>>>>>> 292a872ae52efdf974370ae981ee549eded37974
+				      littleStatus = false;
             }
 
-			/*READ ME: Packet format 
+			/*READ ME: Packet format
 			* When sending data each packet will be truncated with an <EOF> string and started with a <BEG> string
 			* Then data is input between using the $ char delimeter
-			* When possible include a char delimiter so data can be pulled off in the highest priority 
+			* When possible include a char delimiter so data can be pulled off in the highest priority
 			* An example is shown below */
 
-			snprintf(buf, sizeof(buf), "<BEG>%d$%d$%d$%d$%d$%d<EOF>", ID, 
-                                                                data.thumbFinger, 
-                                                                data.indexFinger, 
+			snprintf(buf, sizeof(buf), "<BEG>%d$%d$%d$%d$%d$%d<EOF>", ID,
+                                                                data.thumbFinger,
+                                                                data.indexFinger,
                                                                 data.middleFinger,
-                                                                data.ringFinger, 
+                                                                data.ringFinger,
                                                                 data.littleFinger);
 
 			int n;
@@ -286,21 +236,22 @@ void streamData(int32_t sockfd)
 				//cout << "<BEG>" + finger0 + finger1 + finger2 + finger3 + finger4 + "<EOF>" << endl;
 				n = write(sockfd, buf, strlen(buf));
 				debouncer = true;
-			
+
 			}
 			else if((thumbStatus == false && indexStatus == false && middleStatus == false && ringStatus == false && littleStatus == false) && debouncer == true)
 			{
 				n = write(sockfd, buf, strlen(buf));
 				//cout << "<BEG>" + finger0 + finger1 + finger2 + finger3 + finger4 + "<EOF>" << endl;
 				debouncer = false;
-			
+
 			}
 
 			if(n < 0)
 			{
 				perror("ERROR writing to socket");
-			}		
-        }
+			}
+      
+    }
 	   //sleep(1);
 	}
   
@@ -310,21 +261,21 @@ int connect_to_server(int32_t * sockfd)
 {
 	struct sockaddr_in serveraddr;
     struct hostent *server;
-	
+
 	printf("Connecting to IP: %s on PORT: %d\n", hostname, portno);
-	
+
     /* socket: create the socket */
     *sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (*sockfd < 0) 
+    if (*sockfd < 0)
     {
 	    perror("ERROR opening socket");
 		return 1;
-    }				    
-    
+    }
+
     /* gethostbyname: get the server's DNS entry */
     server = gethostbyname(hostname);
 
-    if (server == NULL) 
+    if (server == NULL)
     {
        fprintf(stderr,"ERROR, no such host as %s\n", hostname);
        return 1;
@@ -335,9 +286,9 @@ int connect_to_server(int32_t * sockfd)
     serveraddr.sin_family = AF_INET;
     bcopy((char *)server->h_addr, (char *)&serveraddr.sin_addr.s_addr, server->h_length);
     serveraddr.sin_port = htons(portno);
-	
+
     /* connect: create a connection with the server */
-    if (connect(*sockfd, (const struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) 
+    if (connect(*sockfd, (const struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
     {
        perror("ERROR connecting");
 	   return 1;
