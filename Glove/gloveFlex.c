@@ -165,56 +165,56 @@ void streamData(int32_t sockfd)
             if(thumbFinger > 50)
             {
                 data.thumbFinger = 1;
-		thumbStatus = true;
+				thumbStatus = true;
             }
             else
             {
                 data.thumbFinger = 0;
-		thumbStatus = false;
+				thumbStatus = false;
             }
 
             if(indexFinger > 50)
             {
                 data.indexFinger = 1;
-		indexStatus = true;
+				indexStatus = true;
             }
             else
             {
                 data.indexFinger = 0;
-		indexStatus = false;
+				indexStatus = false;
             }
 
             if(middleFinger > 50)
             {
                 data.middleFinger = 1;
-		middleStatus = true;
+				middleStatus = true;
             }
             else
             {
                 data.middleFinger = 0;
-		middleStatus = false;
+				middleStatus = false;
             }
 
             if(ringFinger > 50)
             {
                 data.ringFinger = 1;
-		ringStatus = true;
+				ringStatus = true;
             }
             else
             {
                 data.ringFinger = 0;
-		ringStatus = false;
+				ringStatus = false;
             }
 
             if(littleFinger > 50)
             {
                 data.littleFinger = 1;
-		littleStatus = true;
+				littleStatus = true;
             }
             else
             {
                 data.littleFinger = 0;
-		littleStatus = false;
+				littleStatus = false;
             }
 
 			/*READ ME: Packet format 
