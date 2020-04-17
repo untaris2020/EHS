@@ -25,7 +25,7 @@ do
                 echo "KILLING IT"
                 killall -sKILL gloveCam
                 killall -sKILL gloveFlex
-                killall -sKILL getbno055
+                killall -sKILL imu
 
                 status=true
 

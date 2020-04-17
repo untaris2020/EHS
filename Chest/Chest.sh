@@ -23,7 +23,7 @@ do
         then
                 echo "KILLING IT"
                 killall -sKILL chestCam
-                killall -sKILL getbno055
+                killall -sKILL imu
 
                 status=true
 
