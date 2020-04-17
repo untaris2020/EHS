@@ -19,6 +19,14 @@
 #       ./System.sh init - Will give the shell scripts Chest.sh and Glove.sh rights to run on the system
 #                          It will also run the make files and create the executables
 
+#      ./System.sh Chest - Will give the shell script Chest.sh rights to run on the system
+#                          It will also run the make file and create the executables for the Chest
+#                          (This command is useful if you made an IP and portn no change and you want to run the make file from the current directory.)
+
+#      ./System.sh Glove - Will give the shell script Glove.sh rights to run on the system
+#                          It will also run the make file and create the executables for the Glove
+#                          (This command is useful if you made an IP and portn no change and you want to run the make file from the current directory.)
+
 #!/bin/bash
 
 if [ "$1" == "on" ]
@@ -58,7 +66,31 @@ then
         echo "               READY TO RUN                 "
         ech0 "--------------------------------------------"
         echo ""
+        
+elif [ "$1" == "Chest" ]
+then
 
+        chmod +x /home/pi/EHS/Chest/Chest.sh 
+        cd /home/pi/EHS/Chest && make
+        
+        echo ""
+        echo "------------------------------------------------------"
+        echo "Shell Scripts Active and Executables created for CHEST"
+        echo "                     READY TO RUN                     "
+        ech0 "------------------------------------------------------"
+        echo ""
+        
+elif [ "$1" == "Glove" ]
+then
 
+        chmod +x /home/pi/EHS/Glove/Glove.sh
+        cd /home/pi/EHS/Glove && make
+        
+        echo ""
+        echo "------------------------------------------------------"
+        echo "Shell Scripts Active and Executables created for GLOVE"
+        echo "                     READY TO RUN                     "
+        ech0 "------------------------------------------------------"
+        echo ""
 
 fi
