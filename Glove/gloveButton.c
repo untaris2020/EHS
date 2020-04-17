@@ -10,7 +10,7 @@
 //                gcc gloveButton.c -o gloveButton -lwiringPi
 
 
-
+#include "/home/pi/EHS/globalSettings.h"
 #include <wiringPi.h>
 #include <stdbool.h> 
 #include <stdio.h>
@@ -27,8 +27,6 @@
 #define gpioPORT 7
 #define BUFSIZE 1024
 #define ID 0 
-#define portno 6002
-#define hostname "127.0.0.1"
  
 int connect_to_server(int32_t * sockfd);
 void streamData(int32_t sockfd); 

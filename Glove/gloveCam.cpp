@@ -12,7 +12,7 @@
 
 
 
-
+#include "/home/pi/EHS/globalSettings.h"
 #include "base64.h"
 #include <iostream>
 #include <vector>
@@ -40,9 +40,7 @@ using namespace std;
 using namespace cv;
 
 #define BUFSIZE 20000
-#define ID 0 
-#define portno 6002
-#define hostname "127.0.0.1"
+#define ID 0
 
 // Sets the frame width and height
 #define width 320

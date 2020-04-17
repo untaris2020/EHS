@@ -9,7 +9,7 @@
 //                Run this command to compile
 //                gcc gloveFlex.c -o gloveFlex -lwiringPi
 
-
+#include "/home/pi/EHS/globalSettings.h"
 #include <wiringPi.h>
 #include <mcp3004.h>
 
@@ -27,8 +27,6 @@
 
 #define BUFSIZE 1024
 #define ID 0
-#define portno 6002
-#define hostname "127.0.0.1"
 
 //BASE is a new pin base for the chip of the analog pins
 #define BASE 200
