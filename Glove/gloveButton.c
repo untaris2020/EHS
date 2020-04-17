@@ -26,7 +26,7 @@
 
 #define gpioPORT 7
 #define BUFSIZE 1024
-#define ID 0 
+#define ID 7
  
 int connect_to_server(int32_t * sockfd);
 void streamData(int32_t sockfd); 
@@ -85,7 +85,7 @@ void streamData(int32_t sockfd)
 	   tv.tv_sec = 0; 
 	   tv.tv_usec = 1;
 	
-	   printf("Running loop -- select\n");
+	   //printf("Running loop -- select\n");
 	    
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
 	   {
@@ -118,7 +118,7 @@ void streamData(int32_t sockfd)
 	   }
 	   else if(STREAM)
 	   {
-		   printf("Trying to send data\n");
+		  //printf("Trying to send data\n");
 			//Send data   
 			if(seqID < 2147483647)
 				seqID++;
@@ -198,6 +198,6 @@ int connect_to_server(int32_t * sockfd)
 	   return 1;
     }
 
-	printf("Connected...\n");
+	printf("Glove Button Connected...\n");
 	return 0;
 }

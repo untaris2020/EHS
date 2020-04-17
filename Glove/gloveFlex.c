@@ -26,7 +26,7 @@
 #include <netdb.h>
 
 #define BUFSIZE 1024
-#define ID 0
+#define ID 6
 
 //BASE is a new pin base for the chip of the analog pins
 #define BASE 200
@@ -45,6 +45,7 @@ int main()
 {
   int32_t sockfd;
   char buffer[BUFSIZE];
+  mcp3004Setup(BASE, CHAN0); // 3004 and 3008 are the same 4/8 channels
 
 	while(1)
 	{
@@ -85,11 +86,10 @@ void streamData(int32_t sockfd)
 	// Checks if it is able to detect any sensors
     if(wiringPiSetup() == -1)
     {
-        exit(1);
+        //exit(1);
     }
-
+    
 	// Declaration of boolean variables for debouncing
-    mcp3004Setup(BASE, CHAN0); // 3004 and 3008 are the same 4/8 channels
  	  bool thumbStatus = false;
     bool indexStatus = false;
     bool middleStatus = false;
@@ -111,7 +111,7 @@ void streamData(int32_t sockfd)
 	   tv.tv_sec = 0;
 	   tv.tv_usec = 1;
 
-	   printf("Running loop -- select\n");
+	   //printf("Running loop -- select\n");
 
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
 	   {
@@ -144,7 +144,7 @@ void streamData(int32_t sockfd)
 	   }
 	  else if(STREAM)
 	  {
-      printf("Trying to send data\n");
+      //printf("Trying to send data\n");
 			//Send data
       if(seqID < 2147483647)
 				seqID++;
@@ -258,7 +258,7 @@ void streamData(int32_t sockfd)
 int connect_to_server(int32_t * sockfd)
 {
 	struct sockaddr_in serveraddr;
-    struct hostent *server;
+  struct hostent *server;
 
 	printf("Connecting to IP: %s on PORT: %d\n", hostname, portno);
 
@@ -292,6 +292,7 @@ int connect_to_server(int32_t * sockfd)
 	   return 1;
     }
 
-	printf("Connected...\n");
+	printf("Glove Flex Connected...\n");
+  
 	return 0;
 }

@@ -41,10 +41,11 @@ then
 
 elif [ "$1" == "stop" ]
 then
-
+        killall -sKILL Chest
         killall -sKILL chestCam
         killall -sKILL chestButton
 
+        killall -sKILL Glove
         killall -sKILL gloveCam
         killall -sKILL gloveButton
         killall -sKILL gloveFlex

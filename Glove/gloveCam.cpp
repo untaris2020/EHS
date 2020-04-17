@@ -40,7 +40,7 @@ using namespace std;
 using namespace cv;
 
 #define BUFSIZE 20000
-#define ID 0
+#define ID 5
 
 // Sets the frame width and height
 #define width 320
@@ -68,7 +68,7 @@ int main()
 		/*Sending first time registration message*/ 
 		snprintf(buffer, sizeof(buffer), "<BEG>%d$%s<EOF>", ID, "REG"); 
 		//int n = write(sockfd, buffer, strlen(buffer));
-        int n = send(sockfd, buffer, strlen(buffer), 0);
+    int n = send(sockfd, buffer, strlen(buffer), 0);
 
 		if(n < 0)
 		{
@@ -108,7 +108,7 @@ void streamData(int32_t sockfd)
 	   tv.tv_sec = 0; 
 	   tv.tv_usec = 16666;
 	
-	   printf("Running loop -- select\n");
+	   //printf("Running loop -- select\n");
 	    
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
 	   {
@@ -141,8 +141,8 @@ void streamData(int32_t sockfd)
 	   }
 	   else if(STREAM)
 	   {
-		   printf("Trying to send data\n");
-
+      
+      //printf("Trying to send data\n");
 			//Send data   
 			if(seqID < 2147483647)
 				seqID++;
@@ -232,6 +232,6 @@ int connect_to_server(int32_t * sockfd)
 	   return 1;
     }
 
-	printf("Connected...\n");
+	printf("Glove Cam Connected...\n");
 	return 0;
 }
