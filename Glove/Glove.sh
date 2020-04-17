@@ -24,7 +24,6 @@ do
         then
                 echo "KILLING IT"
                 killall -sKILL gloveCam
-                killall -sKILL gloveButton
                 killall -sKILL gloveFlex
                 killall -sKILL getbno055
 
@@ -35,7 +34,6 @@ do
                 echo "REACTIVATING IT"
                 /home/pi/EHS/Glove/gloveCam &
                 sleep 26
-                /home/pi/EHS/Glove/gloveButton &
                 /home/pi/EHS/Glove/gloveFlex &
                 /home/pi/EHS/ImuC/imu &
 

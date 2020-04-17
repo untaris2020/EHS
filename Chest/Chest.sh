@@ -23,7 +23,6 @@ do
         then
                 echo "KILLING IT"
                 killall -sKILL chestCam
-                killall -sKILL chestButton
                 killall -sKILL getbno055
 
                 status=true
@@ -33,7 +32,6 @@ do
                 echo "REACTIVATING IT"
                 /home/pi/EHS/Chest/chestCam &
                 sleep 26
-                /home/pi/EHS/Chest/chestButton &
                 /home/pi/EHS/ImuC/imu &
                 
                 status=false
