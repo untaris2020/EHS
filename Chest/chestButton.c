@@ -26,7 +26,7 @@
 
 #define gpioPORT 7
 #define BUFSIZE 1024
-#define ID 0 
+#define ID 3
  
 int connect_to_server(int32_t * sockfd);
 void streamData(int32_t sockfd); 
@@ -133,13 +133,13 @@ void streamData(int32_t sockfd)
 			// if the gpioPORT is 0 it means that everything is running smoothly
             if(digitalRead(gpioPORT) == 1 && status == false)
             {
-                data.status = "INACTIVE";
-				status = true;
+              data.status = "INACTIVE";
+				      status = true;
             }
             else if(digitalRead(gpioPORT) == 0 && status == true)
             {
-                data.status = "ACTIVE";
-				status = false;
+              data.status = "ACTIVE";
+				      status = false;
             }
 
 			/*READ ME: Packet format 
@@ -163,17 +163,17 @@ void streamData(int32_t sockfd)
 
 int connect_to_server(int32_t * sockfd)
 {
-	struct sockaddr_in serveraddr;
+	  struct sockaddr_in serveraddr;
     struct hostent *server;
 	
-	printf("Connecting to IP: %s on PORT: %d\n", hostname, portno);
+	  printf("Connecting to IP: %s on PORT: %d\n", hostname, portno);
 	
     /* socket: create the socket */
     *sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (*sockfd < 0) 
     {
 	    perror("ERROR opening socket");
-		return 1;
+		  return 1;
     }				    
     
     /* gethostbyname: get the server's DNS entry */

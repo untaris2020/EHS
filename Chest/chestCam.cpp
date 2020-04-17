@@ -40,7 +40,7 @@ using namespace std;
 using namespace cv;
 
 #define BUFSIZE 20000
-#define ID 0 
+#define ID 4
 
 // Sets the frame width and height
 #define width 320
