@@ -65,7 +65,7 @@ then
         echo "--------------------------------------------"
         echo "Shell Scripts Active and Executables created"
         echo "               READY TO RUN                 "
-        ech0 "--------------------------------------------"
+        echo "--------------------------------------------"
         echo ""
         
 elif [ "$1" == "Chest" ]
@@ -78,7 +78,7 @@ then
         echo "------------------------------------------------------"
         echo "Shell Scripts Active and Executables created for CHEST"
         echo "                     READY TO RUN                     "
-        ech0 "------------------------------------------------------"
+        echo "------------------------------------------------------"
         echo ""
         
 elif [ "$1" == "Glove" ]
@@ -91,7 +91,7 @@ then
         echo "------------------------------------------------------"
         echo "Shell Scripts Active and Executables created for GLOVE"
         echo "                     READY TO RUN                     "
-        ech0 "------------------------------------------------------"
+        echo "------------------------------------------------------"
         echo ""
 
 fi
