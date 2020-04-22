@@ -14,7 +14,7 @@ sleep 26
 ./gloveButton &
 ./gloveFlex &
 
-cd /ImuC/
+cd ImuC/
 ./imu &
 
 status=false
@@ -39,7 +39,7 @@ do
                 ./gloveButton &
                 ./gloveFlex &
                 
-                cd /ImuC/
+                cd ImuC/
                 ./imu & 
 
                 status=false
