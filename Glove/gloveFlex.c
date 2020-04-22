@@ -231,15 +231,15 @@ void streamData(int32_t sockfd)
 			int n;
 			if((thumbStatus == true && (indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true)) && debouncer == false)
 			{
-				//cout << "<BEG>" + finger0 + finger1 + finger2 + finger3 + finger4 + "<EOF>" << endl;
+				//printf("<BEG>%d%d%d%d%d<EOF>\n",thumbFinger, indexFinger, middleFinger, ringFinger, littleFinger);
 				n = write(sockfd, buf, strlen(buf));
 				debouncer = true;
 
 			}
 			else if((thumbStatus == false && indexStatus == false && middleStatus == false && ringStatus == false && littleStatus == false) && debouncer == true)
 			{
-				n = write(sockfd, buf, strlen(buf));
-				//cout << "<BEG>" + finger0 + finger1 + finger2 + finger3 + finger4 + "<EOF>" << endl;
+				//n = write(sockfd, buf, strlen(buf));
+				//printf("<BEG>%d%d%d%d%d<EOF>\n",thumbFinger, indexFinger, middleFinger, ringFinger, littleFinger);
 				debouncer = false;
 
 			}
