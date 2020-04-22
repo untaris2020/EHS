@@ -111,8 +111,6 @@ void streamData(int32_t sockfd)
 	   tv.tv_sec = 0;
 	   tv.tv_usec = 1;
     
-     int n;
-
 	   //printf("Running loop -- select\n");
 
 	   if(select(sockfd+1, &rfds, NULL, NULL, &tv) == -1)
@@ -230,7 +228,7 @@ void streamData(int32_t sockfd)
                                                                 data.ringFinger,
                                                                 data.littleFinger);
 
-			
+			int n;
 			if((indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true) && debouncer == false)
 			{
 				//printf("%s\n", buf);
@@ -246,7 +244,7 @@ void streamData(int32_t sockfd)
 
 			if(n < 0)
 			{
-				perror("ERROR writing to socket");
+				//perror("ERROR writing to socket");
 			}
       
     }
