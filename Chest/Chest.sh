@@ -13,11 +13,7 @@
 sleep 26
 ./chestButton &
 
-<<<<<<< HEAD
 cd ImuC/
-=======
-cd ImuC/ 
->>>>>>> 71b930327160aa68ba625f9a025675ef5b02b068
 ./imu & 
 
 status=false
