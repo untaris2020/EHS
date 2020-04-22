@@ -50,6 +50,7 @@ then
         killall -sKILL gloveButton
         killall -sKILL gloveFlex
         killall -sKILL imu
+        killall -sKILL gpio
         echo "MANUALLY KILLED"
         
 elif [ "$1" == "init" ]
