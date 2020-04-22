@@ -2,6 +2,7 @@
  *  * tcpclient.c - A simple TCP client
  *   * usage: tcpclient <host> <port>
  *    */
+#include "/home/pi/EHS/globalSettings.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -17,8 +18,6 @@
 
 #define BUFSIZE 1024
 #define ID 1
-#define portno 6002
-#define hostname "192.168.1.11"
 
 char senaddr[256] = "0x28";
 
