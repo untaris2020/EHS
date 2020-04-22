@@ -110,6 +110,8 @@ void streamData(int32_t sockfd)
 	   FD_SET(sockfd,&rfds);
 	   tv.tv_sec = 0;
 	   tv.tv_usec = 1;
+    
+     int n;
 
 	   //printf("Running loop -- select\n");
 
@@ -228,7 +230,7 @@ void streamData(int32_t sockfd)
                                                                 data.ringFinger,
                                                                 data.littleFinger);
 
-			int n;
+			
 			if((indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true) && debouncer == false)
 			{
 				//printf("%s\n", buf);
