@@ -13,7 +13,7 @@
 sleep 26
 ./chestButton &
 
-cd /ImuC/
+cd ImuC/ 
 ./imu & 
 
 status=false
@@ -36,7 +36,7 @@ do
                 sleep 26
                 ./chestButton &
 
-                cd /ImuC/
+                cd ImuC/
                 ./imu & 
                 
                 status=false

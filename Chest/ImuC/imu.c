@@ -329,7 +329,7 @@ int connect_to_server(int32_t * sockfd)
 	   return 1;
     }
 
-	printf("Connected...\n");
+	printf("Chest IMU Connected...\n");
 	return 0;
 }
 
