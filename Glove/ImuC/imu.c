@@ -366,13 +366,13 @@ void printData(){
         
       }
       get_acc(&bnodA);
-        //printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
+        printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
         //sleep(0.1);
       get_lin(&bnodL);
-        //printf("Linear Accelerometer Data (x,y,x): %f %f %f\n", bnodL.linacc_x, bnodL.linacc_y, bnodL.linacc_z);
+        printf("Linear Accelerometer Data (x,y,x): %f %f %f\n", bnodL.linacc_x, bnodL.linacc_y, bnodL.linacc_z);
         //sleep(0.1);
       get_qua(&bnodQ);
-        //printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
+        printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
         //sleep(0.1);
       
         

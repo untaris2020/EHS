@@ -60,7 +60,10 @@ then
         chmod +x /home/pi/EHS/Glove/Glove.sh
         
         cd /home/pi/EHS/Chest && make
+        cd /home/pi/EHS/Chest/ImuC && make
+        
         cd /home/pi/EHS/Glove && make
+        cd /home/pi/EHS/Glove/ImuC && make
         
         echo ""
         echo "--------------------------------------------"
@@ -74,6 +77,7 @@ then
 
         chmod +x /home/pi/EHS/Chest/Chest.sh 
         cd /home/pi/EHS/Chest && make
+        cd /home/pi/EHS/Chest/ImuC && make
         
         echo ""
         echo "------------------------------------------------------"
@@ -87,6 +91,7 @@ then
 
         chmod +x /home/pi/EHS/Glove/Glove.sh
         cd /home/pi/EHS/Glove && make
+        cd /home/pi/EHS/Glove/ImuC && make
         
         echo ""
         echo "------------------------------------------------------"
