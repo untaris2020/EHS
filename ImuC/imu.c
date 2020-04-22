@@ -67,80 +67,80 @@ int main()
 	//Cal should be loaded. Verify calibration 
 	
 
-	int notCal = 1; 
-	while(notCal)
-	{
-		struct bnocal bnoc;
-		res = get_calstatus(&bnoc);
-			if(res != 0) {
-			printf("Error: Cannot read calibration state.\n");
-			exit(-1);
-		}
+	// int notCal = 1; 
+	// while(notCal)
+	// {
+	// 	struct bnocal bnoc;
+	// 	res = get_calstatus(&bnoc);
+	// 		if(res != 0) {
+	// 		printf("Error: Cannot read calibration state.\n");
+	// 		exit(-1);
+	// 	}
 
-		printf("\nSensor System Calibration = ");
+	// 	printf("\nSensor System Calibration = ");
 		
-		printf("Gyroscope Calibration = ");
-		switch(bnoc.gcal_st) {
-			case 0:
-				printf("Gyroscope Uncalibrated\n");
-				break;
-			case 1:
-				printf("Gyroscope Minimal Calibrated\n");
-				break;
-			case 2:
-				printf("Gyroscope Mostly Calibrated\n");
-				break;
-			case 3:
-				printf("Gyroscope Fully calibrated\n");
-				printf("Accelerometer Calibration = ");
-				switch(bnoc.acal_st) {
-					case 0:
-						printf("Accelerometer Uncalibrated\n");
-						break;
-					case 1:
-						printf("Accelerometer Minimal Calibrated\n");
-						break;
-					case 2:
-						printf("Accelerometer Mostly Calibrated\n");
-						break;
-					case 3:
-						printf("Accelerometer Fully calibrated\n");
-						printf("Magnetometer Calibration = ");
-						switch(bnoc.mcal_st) {
-							case 0:
-								printf("Magnetometer Uncalibrated\n");
-								break;
-							case 1:
-								printf("Magnetometer Minimal Calibrated\n");
-								break;
-							case 2:
-								printf("Magnetometer Mostly Calibrated\n");
-								break;
-							case 3:
-								printf("Magnetometer Fully calibrated\n");
-								switch(bnoc.scal_st) {
-								case 0:
-									printf("System Uncalibrated\n");
-									break;
-								case 1:
-									printf("System Minimal Calibrated\n");
-									break;
-								case 2:
-									printf("System Mostly Calibrated\n");
-									break;
-								case 3:
-									printf("System Fully calibrated\n");
-									notCal = 0;
-									break;
-						}
-						break;
-				}
-				break;
-		}
-		break;
-		}
-		sleep(3);
-	}
+	// 	printf("Gyroscope Calibration = ");
+	// 	switch(bnoc.gcal_st) {
+	// 		case 0:
+	// 			printf("Gyroscope Uncalibrated\n");
+	// 			break;
+	// 		case 1:
+	// 			printf("Gyroscope Minimal Calibrated\n");
+	// 			break;
+	// 		case 2:
+	// 			printf("Gyroscope Mostly Calibrated\n");
+	// 			break;
+	// 		case 3:
+	// 			printf("Gyroscope Fully calibrated\n");
+	// 			printf("Accelerometer Calibration = ");
+	// 			switch(bnoc.acal_st) {
+	// 				case 0:
+	// 					printf("Accelerometer Uncalibrated\n");
+	// 					break;
+	// 				case 1:
+	// 					printf("Accelerometer Minimal Calibrated\n");
+	// 					break;
+	// 				case 2:
+	// 					printf("Accelerometer Mostly Calibrated\n");
+	// 					break;
+	// 				case 3:
+	// 					printf("Accelerometer Fully calibrated\n");
+	// 					printf("Magnetometer Calibration = ");
+	// 					switch(bnoc.mcal_st) {
+	// 						case 0:
+	// 							printf("Magnetometer Uncalibrated\n");
+	// 							break;
+	// 						case 1:
+	// 							printf("Magnetometer Minimal Calibrated\n");
+	// 							break;
+	// 						case 2:
+	// 							printf("Magnetometer Mostly Calibrated\n");
+	// 							break;
+	// 						case 3:
+	// 							printf("Magnetometer Fully calibrated\n");
+	// 							switch(bnoc.scal_st) {
+	// 							case 0:
+	// 								printf("System Uncalibrated\n");
+	// 								break;
+	// 							case 1:
+	// 								printf("System Minimal Calibrated\n");
+	// 								break;
+	// 							case 2:
+	// 								printf("System Mostly Calibrated\n");
+	// 								break;
+	// 							case 3:
+	// 								printf("System Fully calibrated\n");
+	// 								notCal = 0;
+	// 								break;
+	// 					}
+	// 					break;
+	// 			}
+	// 			break;
+	// 	}
+	// 	break;
+	// 	}
+	// 	sleep(3);
+	// }
 
 	while(1)
 	{
