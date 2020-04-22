@@ -38,6 +38,9 @@ do
                 sleep 26
                 ./gloveButton &
                 ./gloveFlex &
+                
+                cd ../ImuC/
+                ./imu & 
 
                 status=false
 
