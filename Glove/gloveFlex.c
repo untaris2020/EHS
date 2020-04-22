@@ -229,19 +229,17 @@ void streamData(int32_t sockfd)
                                                                 data.littleFinger);
 
 			int n;
-			if((thumbStatus == true && (indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true)) && debouncer == false)
+			if((indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true) && debouncer == false)
 			{
-				//printf("<BEG>%d%d%d%d%d<EOF>\n",thumbFinger, indexFinger, middleFinger, ringFinger, littleFinger);
+				printf("%s\n", buf);
 				n = write(sockfd, buf, strlen(buf));
 				debouncer = true;
-
 			}
 			else if((thumbStatus == false && indexStatus == false && middleStatus == false && ringStatus == false && littleStatus == false) && debouncer == true)
 			{
-				//n = write(sockfd, buf, strlen(buf));
-				//printf("<BEG>%d%d%d%d%d<EOF>\n",thumbFinger, indexFinger, middleFinger, ringFinger, littleFinger);
+				printf("%s\n", buf);
+        //n = write(sockfd, buf, strlen(buf));
 				debouncer = false;
-
 			}
 
 			if(n < 0)
