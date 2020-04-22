@@ -9,11 +9,13 @@
 
 #!/bin/bash
 
-/home/pi/EHS/Glove/gloveCam &
+./gloveCam &
 sleep 26
-/home/pi/EHS/Glove/gloveButton &
-/home/pi/EHS/Glove/gloveFlex &
-/home/pi/EHS/ImuC/imu &
+./gloveButton &
+./gloveFlex &
+
+cd ../ImuC/
+./imu &
 
 status=false
 
@@ -32,10 +34,10 @@ do
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
         then
                 echo "REACTIVATING IT"
-                /home/pi/EHS/Glove/gloveCam &
+                ./gloveCam &
                 sleep 26
-                /home/pi/EHS/Glove/gloveFlex &
-                /home/pi/EHS/ImuC/imu &
+                ./gloveButton &
+                ./gloveFlex &
 
                 status=false
 
