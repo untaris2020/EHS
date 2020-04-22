@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <time.h>
+#include <math.h>
 #include "getbno055.h"
 
 #define BUFSIZE 1024
@@ -63,6 +64,20 @@ int main()
 		exit(-1);
 	}
 
+
+
+
+
+
+  //Comment out line when doing testing with system
+  //printData();
+  
+  
+  
+  
+  
+  
+  
 	//Cal should be loaded. Verify calibration 
 	
 
@@ -179,7 +194,7 @@ void streamData(int32_t sockfd)
 
 	while(1)
 	{
-       struct bnoacc bnodA;
+     struct bnoacc bnodA;
 	   struct bnoqua bnodQ;
 	   FD_SET(sockfd,&rfds);
 	   tv.tv_sec = 0;
@@ -332,4 +347,39 @@ int connect_to_server(int32_t * sockfd)
 	printf("Glove IMU Connected...\n");
 	return 0;
 }
+void printData(){
 
+    struct bnoacc bnodA;
+    struct bnoqua bnodQ;
+    struct bnolin bnodL;
+    float normal;
+    while(1){
+        
+        
+      for(int i=0; i < 50; i++){
+        
+      }
+      for(int i=0; i < 50; i++){
+        
+      }
+      for(int i=0; i < 50; i++){
+        
+      }
+      get_acc(&bnodA);
+        //printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
+        //sleep(0.1);
+      get_lin(&bnodL);
+        //printf("Linear Accelerometer Data (x,y,x): %f %f %f\n", bnodL.linacc_x, bnodL.linacc_y, bnodL.linacc_z);
+        //sleep(0.1);
+      get_qua(&bnodQ);
+        //printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
+        //sleep(0.1);
+      
+        
+    
+      //normal = sqrt(
+    
+      sleep(0.5);
+    }
+
+}

@@ -231,13 +231,13 @@ void streamData(int32_t sockfd)
 			int n;
 			if((indexStatus == true || middleStatus == true || ringStatus == true || littleStatus == true) && debouncer == false)
 			{
-				printf("%s\n", buf);
+				//printf("%s\n", buf);
 				n = write(sockfd, buf, strlen(buf));
 				debouncer = true;
 			}
 			else if((thumbStatus == false && indexStatus == false && middleStatus == false && ringStatus == false && littleStatus == false) && debouncer == true)
 			{
-				printf("%s\n", buf);
+				//printf("%s\n", buf);
         //n = write(sockfd, buf, strlen(buf));
 				debouncer = false;
 			}
