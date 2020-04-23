@@ -1,6 +1,6 @@
 // Project Name:  A.R.I.S. - Augmented Reality Interface System
 // University:    University of North Texas
-// Developers:    Juan Ruiz and Timothy Stern, Computer Engineering
+// Developers:    Juan Ruiz, Timothy Stern, and Nick Bratsch Computer Engineering
 // Date Created:  04/07/2020
 
 // Purpose:       The purpose of the gloveButton.c script is to read the status of the reset button and send the status to the
