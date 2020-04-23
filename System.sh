@@ -41,16 +41,17 @@ then
 
 elif [ "$1" == "stop" ]
 then
-        killall -sKILL Chest
-        killall -sKILL chestCam
-        killall -sKILL chestButton
+        pkill -f Chest
+        pkill -f chestCam
+        pkill -f chestButton
 
-        killall -sKILL Glove
-        killall -sKILL gloveCam
-        killall -sKILL gloveButton
-        killall -sKILL gloveFlex
-        killall -sKILL imu
-        killall -sKILL gpio
+        pkill -f Glove
+        pkill -f gloveCam
+        pkill -f gloveButton
+        pkill -f gloveFlex
+        pkill -f imu
+        pkill -f gpio
+        pkill -f bash
         echo "MANUALLY KILLED"
         
 elif [ "$1" == "init" ]

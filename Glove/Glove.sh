@@ -25,10 +25,16 @@ do
         if [ "$switchStatus" == "1" ] && [ "$status" == "false" ]
         then
                 echo "KILLING IT"
-                killall -sKILL gloveCam
-                killall -sKILL gloveFlex
-                killall -sKILL imu
-
+                
+                ps -aux | grep imu
+                pkill -f imu
+                echo "Glove IMU Killed"
+                pkill -f gloveCam
+                echo "Glove Cam Killed"
+                pkill -f gloveFlex
+                echo "Glove Flex Killed"
+                sleep 1
+                
                 status=true
 
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
@@ -43,6 +49,7 @@ do
                 
                 cd ImuC/
                 ./imu & 
+                sleep 1
 
                 status=false
 
