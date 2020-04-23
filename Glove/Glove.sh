@@ -26,9 +26,9 @@ do
         if [ "$switchStatus" == "1" ] && [ "$status" == "false" ]
         then
                 echo "KILLING IT"
-                killall -sKILL gloveCam
-                killall -sKILL imu
-                killall -sKILL gloveFlex
+                sudo killall -sKILL gloveCam
+                sudo killall -sKILL imu
+                sudo killall -sKILL gloveFlex
 
                 status=true
 
@@ -36,7 +36,7 @@ do
         then
                 echo "REACTIVATING IT"
                 
-                ./gloveButton &
+                #./gloveButton &
                 ./gloveFlex &
 
                 cd ImuC/
