@@ -39,7 +39,6 @@ do
                 
                 ./gloveCam &
                 sleep 26
-                ./gloveButton &
                 ./gloveFlex &
                 
                 cd ImuC/
