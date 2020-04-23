@@ -34,6 +34,9 @@ do
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
         then
                 echo "REACTIVATING IT"
+                
+                cd ..
+                
                 ./gloveCam &
                 sleep 26
                 ./gloveButton &
