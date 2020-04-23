@@ -1,8 +1,7 @@
+all: chestCam chestButton
 
-all: chestCam.cpp base64.cpp chestButton.c
-	g++ chestCam.cpp base64.cpp -o chestCam `pkg-config --cflags --libs opencv`
-	gcc chestButton.c -o chestButton -lwiringPi
+chestCam: chestCam.cpp base64.cpp
+	g++ -o chestCam chestCam.cpp base64.cpp `pkg-config --cflags --libs opencv`
 
-clean:
-	$(RM) chestCam chestButton
-
+chestButton: chestButton.c
+	gcc -o chestButton chestButton.c -lwiringPi
