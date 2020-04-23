@@ -9,13 +9,15 @@
 
 #!/bin/bash
 
-./gloveCam &
-sleep 26
 ./gloveButton &
 ./gloveFlex &
 
 cd ImuC/
 ./imu &
+
+cd ..
+./gloveCam &
+
 
 status=false
 
@@ -25,32 +27,25 @@ do
         if [ "$switchStatus" == "1" ] && [ "$status" == "false" ]
         then
                 echo "KILLING IT"
-                
-                ps -aux | grep imu
-                pkill -f imu
-                echo "Glove IMU Killed"
-                pkill -f gloveCam
-                echo "Glove Cam Killed"
-                pkill -f gloveFlex
-                echo "Glove Flex Killed"
-                sleep 1
-                
+                killall -sKILL gloveCam
+                killall -sKILL imu
+                killall -sKILL gloveFlex
+
                 status=true
 
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
         then
                 echo "REACTIVATING IT"
                 
-                cd ..
-                
-                ./gloveCam &
-                sleep 26
+                ./gloveButton &
                 ./gloveFlex &
-                
-                cd ImuC/
-                ./imu & 
-                sleep 1
 
+                cd ImuC/
+                ./imu &
+
+                cd ..
+                ./gloveCam &
+                
                 status=false
 
         fi

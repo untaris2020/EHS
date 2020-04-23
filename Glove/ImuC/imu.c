@@ -14,7 +14,6 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <time.h>
-#include <math.h>
 #include "getbno055.h"
 
 #define BUFSIZE 1024
@@ -26,7 +25,6 @@ char senaddr[256] = "0x28";
 int connect_to_server(int32_t * sockfd);
 
 void streamData(int32_t sockfd);
-float time_diff(struct timeval x , struct timeval y);
 
 int main()
 {
@@ -65,20 +63,6 @@ int main()
 		exit(-1);
 	}
 
-
-
-
-
-
-  //Comment out line when doing testing with system
-  //printData();
-  
-  
-  
-  
-  
-  
-  
 	//Cal should be loaded. Verify calibration 
 	
 
@@ -195,7 +179,7 @@ void streamData(int32_t sockfd)
 
 	while(1)
 	{
-     struct bnoacc bnodA;
+       struct bnoacc bnodA;
 	   struct bnoqua bnodQ;
 	   FD_SET(sockfd,&rfds);
 	   tv.tv_sec = 0;
@@ -345,94 +329,7 @@ int connect_to_server(int32_t * sockfd)
 	   return 1;
     }
 
-	printf("Glove IMU Connected...\n");
+	printf("Chest IMU Connected...\n");
 	return 0;
 }
-void printData(){
 
-    
-    struct bnoacc bnodA;
-    struct bnoqua bnodQ;
-    struct bnolin bnodL;
-    float normal;
-    float aAvx = 0;
-    float aAvy = 0;
-    float aAvz = 0;
-    float lAv = 0;
-    float lAvx = 0;
-    float lAvy = 0;
-    float lAvz = 0;
-    float xPos = 0;
-    float yPos = 0;
-    float zPos = 0;
-    struct timeval before , after;
-    
-    
-      
-      while(1){
-				
-        
-        float BNO055_SAMPLERATE_DELAY_MS = time_diff(before , after);
-        double ACCEL_VEL_TRANSITION  = BNO055_SAMPLERATE_DELAY_MS/1000; //converting to microseconds
-				double ACCEL_POS_TRANSITION = 0.5 * ACCEL_VEL_TRANSITION * ACCEL_VEL_TRANSITION;
-        gettimeofday(&before , NULL);
-        xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
-				yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
-				zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
-        gettimeofday(&after , NULL);
-        printf("before %lu s\n",before.tv_usec);
-        printf("after %lu s\n",after.tv_usec);
-        printf("took %lu s\n", after.tv_usec - before.tv_usec);
-      }
-      
-      
-      
-      
-      for(int i=0; i < 1000; i++){
-        get_acc(&bnodA);
-        //printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
-        aAvx += bnodA.adata_x;
-        aAvy += bnodA.adata_y;
-        aAvz += bnodA.adata_z;
-        
-      }
-      printf("Acc Avg: %f %f %f\n", aAvx/1000, aAvy/1000, aAvz/1000);
-      for(int i=0; i < 1000; i++){
-        get_lin(&bnodL);
-        //printf("Linear Accelerometer Data (x,y,x): %f %f %f\n", bnodL.linacc_x, bnodL.linacc_y, bnodL.linacc_z);
-        lAvx += bnodL.linacc_x;
-        lAvy += bnodL.linacc_y;
-        lAvz += bnodL.linacc_z;
-        
-      }
-      printf("Lin Avg: %f %f %f\n", lAvx/1000, lAvy/1000, lAvz/1000);
-      for(int i=0; i < 50; i++){
-        
-      }
-      
-        //sleep(0.1);
-      
-        //sleep(0.1);
-      get_qua(&bnodQ);
-        printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
-        //sleep(0.1);
-      
-        
-    
-      //normal = sqrt(
-    
-      sleep(0.5);
-    //}
-
-}
-float time_diff(struct timeval x , struct timeval y)
-{
-	double x_ms , y_ms , diff;
-
-	x_ms = (double)x.tv_sec*1000000 + (double)x.tv_usec;
-	y_ms = (double)y.tv_sec*1000000 + (double)y.tv_usec;
-
-	diff = (double)y_ms - (double)x_ms;
-
-	return diff;
-}
