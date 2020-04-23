@@ -1,6 +1,6 @@
 # Project Name:  A.R.I.S. - Augmented Reality Interface System
 # University:    University of North Texas
-# Developers:    Juan Ruiz, Computer Engineering
+# Developers:    Juan Ruiz, Nick Bratsch Computer Engineering
 # Date Created:  04/07/2020
 
 # Purpose:       The purpose of the Chest.sh is to read the status of the hard reset switch
@@ -14,6 +14,7 @@
 cd ImuC/
 ./imu & 
 
+cd ..
 ./chestCam &
 
 status=false
@@ -38,6 +39,7 @@ do
                 cd ImuC/
                 ./imu & 
 
+                cd ..
                 ./chestCam &
 
                 status=false
