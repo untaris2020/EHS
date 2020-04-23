@@ -27,6 +27,36 @@ int main()
 
     opmode_t mode = ndof; 
 
+   //Check Mode
+   int notMode = 1; 
+   int res =0;
+   int des_mode = ndof;
+   while(notMode)
+   {
+      int mode = get_mode();
+      if(mode != 11) {
+         printf("Error sensor mode %d is not a valid mode.Attempting to set correct mode\n", mode);
+         res = set_mode(des_mode);
+         if(res != 0) {
+            printf("Error: could not set sensor mode [0x%02X].\n", des_mode);
+            exit(-1);
+         }
+         sleep(3);
+      }
+      else
+      {
+         notMode = 0; 
+      }
+   }
+
+	//Attempt to load the config file 
+	
+	res = load_cal("bno055.cal");
+		if(res != 0) {
+		printf("Error: Cannot load cal file\n");
+		exit(-1);
+	}
+
 
     while(!FullyCal)
     {
