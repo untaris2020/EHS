@@ -32,9 +32,11 @@ do
         elif [ "$switchStatus" == "0" ] && [ "$status" == "true" ]
         then
                 echo "REACTIVATING IT"
+                
+                cd ..
+                
                 ./chestCam &
                 sleep 26
-                ./chestButton &
 
                 cd ImuC/
                 ./imu & 
