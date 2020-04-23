@@ -33,7 +33,7 @@ do
         then
                 echo "REACTIVATING IT"
                 
-                ./chestButton &
+                #./chestButton &
 
                 cd ImuC/
                 ./imu & 

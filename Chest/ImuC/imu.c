@@ -17,7 +17,7 @@
 #include "getbno055.h"
 
 #define BUFSIZE 1024
-#define ID 1
+#define ID 2
 
 char senaddr[256] = "0x28";
 
@@ -29,13 +29,13 @@ void streamData(int32_t sockfd);
 int main()
 {
     int32_t sockfd;
-    int res = 0; 
+    int res = 0;
     char buffer[BUFSIZE];
 
     get_i2cbus(senaddr);
 
 	//Check Mode
-	int notMode = 1; 
+	int notMode = 1;
 	int des_mode = ndof;
 	while(notMode)
 	{
@@ -51,22 +51,22 @@ int main()
 		}
 		else
 		{
-			notMode = 0; 
+			notMode = 0;
 		}
 	}
-	
-	//Attempt to load the config file 
-	
+
+	//Attempt to load the config file
+
 	res = load_cal("bno055.cal");
 		if(res != 0) {
 		printf("Error: Cannot load cal file\n");
 		exit(-1);
 	}
 
-	//Cal should be loaded. Verify calibration 
-	
+	//Cal should be loaded. Verify calibration
 
-	// int notCal = 1; 
+
+	// int notCal = 1;
 	// while(notCal)
 	// {
 	// 	struct bnocal bnoc;
@@ -77,7 +77,7 @@ int main()
 	// 	}
 
 	// 	printf("\nSensor System Calibration = ");
-		
+
 	// 	printf("Gyroscope Calibration = ");
 	// 	switch(bnoc.gcal_st) {
 	// 		case 0:
@@ -332,4 +332,5 @@ int connect_to_server(int32_t * sockfd)
 	printf("Chest IMU Connected...\n");
 	return 0;
 }
+
 
