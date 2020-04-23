@@ -18,7 +18,6 @@ cd ImuC/
 cd ..
 ./gloveCam &
 
-
 status=false
 
 while switchStatus=$(gpio read 7)
