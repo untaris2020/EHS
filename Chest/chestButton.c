@@ -127,20 +127,32 @@ void streamData(int32_t sockfd)
 	   
 			bzero(buf, BUFSIZE); //Zero out buffer
 
-
+      int n;
 			// If the gpioPORT is 1 (if the button is toggled) then it will send an INACTIVE message to the server letting
 			// it know that it has some issues and that is resetting the pinMode
 			// if the gpioPORT is 0 it means that everything is running smoothly
-            if(digitalRead(gpioPORT) == 1 && status == false)
-            {
-              data.status = "INACTIVE";
-				      status = true;
-            }
-            else if(digitalRead(gpioPORT) == 0 && status == true)
-            {
-              data.status = "ACTIVE";
-				      status = false;
-            }
+      if(digitalRead(gpioPORT) == 1 && status == false)
+      {
+        data.status = "INACTIVE";
+        snprintf(buf, sizeof(buf), "<BEG>%d$%s<EOF>", ID, data.status); 
+        n = write(sockfd, buf, strlen(buf)); 
+				if(n < 0)
+				{
+					perror("ERROR writing to socket");
+				}		
+        status = true;
+      }
+      else if(digitalRead(gpioPORT) == 0 && status == true)
+      {
+        data.status = "ACTIVE";
+        snprintf(buf, sizeof(buf), "<BEG>%d$%s<EOF>", ID, data.status); 
+        n = write(sockfd, buf, strlen(buf));
+				if(n < 0)
+				{
+					perror("ERROR writing to socket");
+				}		
+        status = false;
+      }
 
 			/*READ ME: Packet format 
 			* When sending data each packet will be truncated with an <EOF> string and started with a <BEG> string
@@ -148,17 +160,13 @@ void streamData(int32_t sockfd)
 			* When possible include a char delimiter so data can be pulled off in the highest priority 
 			* An example is shown below */
 
-			snprintf(buf, sizeof(buf), "<BEG>%d$%s<EOF>", ID, data.status); 
+			//int n = write(sockfd, buf, strlen(buf));
 
-			int n = write(sockfd, buf, strlen(buf));
-
-			if(n < 0)
-			{
-				perror("ERROR writing to socket");
-			}		
+			
 	   }
 	   //sleep(1);
 	}
+  
 }
 
 int connect_to_server(int32_t * sockfd)

@@ -9,12 +9,12 @@
 
 #!/bin/bash
 
-./chestCam &
-sleep 26
 ./chestButton &
 
 cd ImuC/
 ./imu & 
+
+./chestCam &
 
 status=false
 
@@ -33,14 +33,13 @@ do
         then
                 echo "REACTIVATING IT"
                 
-                cd ..
-                
-                ./chestCam &
-                sleep 26
+                ./chestButton &
 
                 cd ImuC/
                 ./imu & 
-                
+
+                ./chestCam &
+
                 status=false
 
         fi
