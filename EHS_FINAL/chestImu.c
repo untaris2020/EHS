@@ -17,7 +17,7 @@
 #include "getbno055.h"
 
 #define BUFSIZE 1024
-#define ID 2
+#define ID 1
 
 char senaddr[256] = "0x28";
 

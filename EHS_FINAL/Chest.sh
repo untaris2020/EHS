@@ -12,7 +12,7 @@
 killall -sKILL Chest
 killall -sKILL chestCam
 killall -sKILL chestButton
-killall -sKILL gloveImu
+killall -sKILL chestImu
 
 killall -sKILL Glove
 killall -sKILL gloveCam
