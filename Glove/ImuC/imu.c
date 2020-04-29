@@ -32,11 +32,8 @@ int main()
     int res = 0; 
     char buffer[BUFSIZE];
 
-<<<<<<< HEAD
-=======
     get_i2cbus(senaddr);
 
->>>>>>> 4957bbb6e0c9803672e038cbd123d31a473932c2
 	while(1)
 	{
 		//run the connection until one is established
