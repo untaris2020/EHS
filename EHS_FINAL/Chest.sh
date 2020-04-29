@@ -9,6 +9,19 @@
 
 #!/bin/bash
 
+killall -sKILL Chest
+killall -sKILL chestCam
+killall -sKILL chestButton
+killall -sKILL gloveImu
+
+killall -sKILL Glove
+killall -sKILL gloveCam
+killall -sKILL gloveButton
+killall -sKILL gloveFlex
+killall -sKILL gloveImu
+
+
+
 ./chestButton &
 
 ./chestImu & 
