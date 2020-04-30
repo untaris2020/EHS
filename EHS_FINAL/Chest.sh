@@ -52,4 +52,4 @@ do
                 status=false
 
         fi
-done &
+done 
