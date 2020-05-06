@@ -20,7 +20,7 @@ int main()
 {
     int FullyCal = 0;
 
-    printf("ISSUE HERE");
+   
     get_i2cbus(senaddr);
 
     printf("Calibrating IMU\n");

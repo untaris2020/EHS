@@ -1,6 +1,6 @@
 # Project Name:  A.R.I.S. - Augmented Reality Interface System
 # University:    University of North Texas
-# Developers:    Juan Ruiz, Computer Engineering
+# Developers:    Nick Bratsch, Juan Ruiz Computer Engineering
 # Date Created:  04/07/2020
 
 # Purpose:       The purpose of the Glove.sh is to read the status of the hard reset switch

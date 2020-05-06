@@ -33,7 +33,7 @@ float lAvy = 0;
 float lAvz = 0;
 char senaddr[256] = "0x28";
 int first = 1;
-
+int countTemp = 0;
 int connect_to_server(int32_t * sockfd);
 
 void streamData(int32_t sockfd);
@@ -55,8 +55,22 @@ void add_matrix(Matrix a, Matrix b, Matrix c);
 void print_matrix(Matrix m);
 void subtract_matrix(Matrix a, Matrix b, Matrix c);
 
+float prevXSpeed; 
+float prevYSpeed; 
+float prevZSpeed; 
+float prevXPos; 
+float prevYPos; 
+float prevZPos; 
+
 int main()
 {
+  prevXSpeed = 0; 
+  prevYSpeed = 0; 
+  prevZSpeed = 0; 
+  prevXPos = 0; 
+  prevYPos = 0; 
+  prevZPos = 0; 
+
     int32_t sockfd;
     int res = 0;
     char buffer[BUFSIZE];
@@ -98,10 +112,10 @@ int main()
 
 
 
-
+  //printData();
   //Comment out line when doing testing with system
   //printData();
-    kalmanFilter();
+    //kalmanFilter();
 
 
 
@@ -219,11 +233,12 @@ void streamData(int32_t sockfd)
 	char buf[BUFSIZE];
 	fd_set rfds;
     struct timeval tv;
-
+    struct bnoacc bnodA;
+	   struct bnoqua bnodQ;
+       struct bnolin bnodL;
 	while(1)
 	{
-     struct bnoacc bnodA;
-	   struct bnoqua bnodQ;
+     
 	   FD_SET(sockfd,&rfds);
 	   tv.tv_sec = 0;
 	   tv.tv_usec = 1;
@@ -242,8 +257,15 @@ void streamData(int32_t sockfd)
 
 		   if(!strncmp(buf, "START", 5))
 		   {
-				printf("Stream started\n");
-				STREAM = 1;
+          prevXSpeed = 0; 
+          prevYSpeed = 0; 
+          prevZSpeed = 0; 
+          prevXPos = 0; 
+          prevYPos = 0; 
+          prevZPos = 0; 
+
+          printf("Stream started\n");
+          STREAM = 1;
 		   }
 		   else if(!strncmp(buf, "STOP", 5))
 		   {
@@ -299,9 +321,56 @@ void streamData(int32_t sockfd)
 					printf("Error: Cannot read Quaternation data.\n");
 					ERR_FLAG = 1;
 				}
+        res = get_lin(&bnodL);
+        if(res != 0) {
+					printf("Error: Cannot read linear accelereation data.\n");
+					ERR_FLAG = 1;
+				}
+        
+        float BNO055_SAMPLERATE_DELAY_MS = 10;
+        float ACCEL_VEL_TRANSITION  = BNO055_SAMPLERATE_DELAY_MS/100; //converting to microseconds
+        float ACCEL_POS_TRANSITION = 0.5 * ACCEL_VEL_TRANSITION * ACCEL_VEL_TRANSITION;
+        xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
+        yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
+        zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
+        
+
+        //Maybe move time to a delta time? 
+
+        /*
+        float speedX = prevXSpeed + bnodL.linacc_x * .01;
+        float speedY = prevYSpeed + bnodL.linacc_y * .01;
+        float speedZ = prevZSpeed + bnodL.linacc_z * .01;
+        
+        xPos = prevXPos + speedX * .01; 
+        yPos = prevYPos + speedY * .01; 
+        zPos = prevZPos + speedZ * .01; 
+
+        prevXSpeed = speedX;
+        prevYSpeed = speedY; 
+        prevZSpeed = speedZ; 
+
+        prevXPos = xPos; 
+        prevYPos = yPos; 
+        prevZPos = zPos; 
+        */
+        //xPos = (.1+.1)/((3+3)*(xPos-3)+.1);
+        //yPos = (.1+.1)/((3+3)*(yPos-3)+.1);
+        //zPos = (.1+.1)/((3+3)*(zPos-3)+.1);
+
+        if(countTemp%100 == 0){
+          //printf("Raw X data: %.10lf \n", xPos);
+        }
+        if(countTemp%100 == 0){
+          //printf("Raw Y data: %.10lf \n", yPos);
+        }
+        if(countTemp%100 == 0){
+          //printf("Raw Z data: %.10lf \n", zPos);
+        }
 			//}
         //Uncomment this line when ready to start reading
-            kalmanFilter();
+        //kalmanFilter();
+        
 			/*READ ME: Packet format
 			* When sending data each packet will be truncated with an <EOF> string and started with a <BEG> string
 			* Then data is input between using the $ char delimeter
@@ -312,9 +381,9 @@ void streamData(int32_t sockfd)
 			{
 				snprintf(buf, sizeof(buf), "<BEG>%d$%d$%f$%f$%f$%f$%f$%f$%f<EOF>", ID,
 																			seqID,
-																			xPos*100,
-																			yPos*100,
-																			zPos*100,
+																			xPos,
+																			yPos,
+																			zPos,
 																			bnodQ.quater_w,
 																			bnodQ.quater_x,
 																			bnodQ.quater_y,
@@ -380,7 +449,6 @@ void printData(){
     float normal;
     while(1){
 
-
       for(int i=0; i < 50; i++){
 
       }
@@ -390,14 +458,14 @@ void printData(){
       for(int i=0; i < 50; i++){
 
       }
-      get_acc(&bnodA);
-        printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
+      //get_acc(&bnodA);
+        //printf("Accelerometer Data (x,y,x): %f %f %f\n", bnodA.adata_x, bnodA.adata_y, bnodA.adata_z);
         //sleep(0.1);
       get_lin(&bnodL);
         printf("Linear Accelerometer Data (x,y,x): %f %f %f\n", bnodL.linacc_x, bnodL.linacc_y, bnodL.linacc_z);
         //sleep(0.1);
-      get_qua(&bnodQ);
-        printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
+      //get_qua(&bnodQ);
+        //printf("Quaternion Data (x,y,z,w): %f %f %f %f\n", bnodQ.quater_x, bnodQ.quater_y, bnodQ.quater_z, bnodQ.quater_w);
         //sleep(0.1);
 
 
@@ -446,9 +514,9 @@ void kalmanFilter(){
     float BNO055_SAMPLERATE_DELAY_MS = 10;
     float ACCEL_VEL_TRANSITION  = BNO055_SAMPLERATE_DELAY_MS/1000; //converting to microseconds
     float ACCEL_POS_TRANSITION = 0.5 * ACCEL_VEL_TRANSITION * ACCEL_VEL_TRANSITION;
-    xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
-    yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
-    zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
+    //xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
+    //yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
+    //zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
 
     Matrix matrix;
     matrix = alloc_matrix(6,1);
@@ -513,9 +581,9 @@ void kalmanFilter(){
     //assert(a.rows == c.rows);
     //assert(b.cols == c.cols);
 
-    xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
-    yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
-    zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
+    //xPos = xPos + ACCEL_POS_TRANSITION * bnodL.linacc_x;
+    //yPos = yPos + ACCEL_POS_TRANSITION * bnodL.linacc_y;
+    //zPos = zPos + ACCEL_POS_TRANSITION * bnodL.linacc_z;
 
     set_matrix(matrix, xPos,
                     yPos,
@@ -534,18 +602,29 @@ void kalmanFilter(){
     //assert(a.cols == b.cols);
     //assert(a.cols == c.cols);
     //add_matrix(tempState, tempDev, matrix);
-    subtract_matrix(tempState, tempDev, matrix);
+    add_matrix(tempState, tempDev, matrix);
     //printf("\nValues After Execution\n");
     //print_matrix(matrix);
-
-
+    
+    
+    
     xPos = matrix.data[0][0];
     yPos = matrix.data[0][1];
     zPos = matrix.data[0][2];
-    printf("X data: %f \n", matrix.data[0][0]);
-    printf("Y data: %f \n", matrix.data[0][1]);
-    printf("Z data: %f \n", matrix.data[0][2]);
-
+    if(countTemp%2000 == 0){
+      printf("X data: %.10lf \n", matrix.data[0][0]);
+      printf("Y data: %.10lf \n", matrix.data[0][1]);
+      printf("Z data: %.10lf \n", matrix.data[0][2]);
+      printf("ax data: %f \n", matrix.data[0][3]);
+      printf("ay data: %f \n", matrix.data[0][4]);
+      printf("az data: %f \n", matrix.data[0][5]);
+      printf("x sensor value: %.10lf\n",bnodL.linacc_x);
+      printf("y sensor value: %.10lf\n",bnodL.linacc_y);
+      printf("x sensor value: %.10lf\n",bnodL.linacc_x);
+      
+    }
+    
+    countTemp++;
 
     /*
     double v2p = 0.001;
